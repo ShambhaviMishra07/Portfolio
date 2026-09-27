@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shambhavi Mishra — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Press+Start+2P&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --darkest:#250e2c;
+    --purple:#837ab6;
+    --lavender:#9d85b6;
+    --mauve:#cc8db3;
+    --pink:#f6a5c0;
+    --cream:#fdf2f0;
+    --card-bg:#1a0a20;
+    --card-text:#f6e9dd;
+    --script:'Alex Brush', cursive;
+    --pixel:'Press Start 2P', monospace;
+    --serif:'PT Serif','Times New Roman',Georgia,serif;
+
+    --letter-bg:#f3e6d0;
+    --letter-bg2:#e8d0aa;
+    --letter-ink:#3d2b1f;
+    --letter-meta:#9a7350;
+    --letter-accent:#b5657a;
+    --letter-border:#a9835f;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%; font-family:var(--serif); color:var(--darkest); overflow-x:hidden;}
+
+  body{
+    background:linear-gradient(135deg, var(--darkest) 0%, var(--purple) 32%, var(--lavender) 52%, var(--mauve) 74%, var(--pink) 100%);
+    position:relative; min-height:100dvh;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    z-index:1;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:relative; z-index:5; display:flex; align-items:center; justify-content:space-between;
+    padding:12px 26px; background:rgba(37,14,44,0.85); color:var(--cream);
+    font-family:var(--pixel); font-size:10px; letter-spacing:0.5px;
+    border-bottom:2px solid rgba(246,165,192,0.4);
+    flex:0 0 auto;
+  }
+  .topbar .brand{display:flex; align-items:center; gap:10px;}
+  .topbar .brand .logo{
+    width:18px;height:18px; background:var(--pink); display:inline-block;
+    clip-path:polygon(0 20%,20% 0,80% 0,100% 20%,100% 80%,80% 100%,20% 100%,0 80%);
+  }
+  .topbar .status{display:flex; align-items:center; gap:18px;}
+  .dot{width:7px;height:7px;border-radius:50%; background:#7CFC9A; display:inline-block; box-shadow:0 0 6px #7CFC9A; margin-right:6px;}
+
+  /* ---------- WELCOME (typewriter) — matches hero heading size ---------- */
+  .welcome-wrap{
+    position:relative; z-index:4;
+    text-align:center;
+    padding:14px 20px 2px 20px;
+    flex:0 0 auto;
+  }
+  .welcome-text{
+    font-family:var(--script);
+    font-size:clamp(30px, 6vw, 60px);
+    color:#000000;
+    display:inline-block;
+    min-height:1.2em;
+  }
+  .welcome-text .cursor{
+    display:inline-block;
+    margin-left:2px;
+    animation:blink 0.9s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+
+  /* ---------- MAIN LAYOUT ---------- */
+  .desktop{
+    position:relative; z-index:3; display:flex;
+    padding:10px 30px 10px 30px;
+    gap:30px; align-items:flex-start;
+  }
+
+  /* ---------- GLASS ICON SYSTEM (shared by sidebar + dock) ---------- */
+  .glass-tile{
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.16);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 4px 16px rgba(37,14,44,0.28), inset 0 1px 0 rgba(255,255,255,0.45);
+    transition:transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .icon-item:hover .glass-tile, .dock-item:hover .glass-tile{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,0.28);
+    box-shadow:0 10px 22px rgba(37,14,44,0.32), inset 0 1px 0 rgba(255,255,255,0.55);
+  }
+  .icon-item:active .glass-tile, .dock-item:active .glass-tile{
+    transform:translateY(-1px) scale(0.97);
+  }
+
+  .sidebar-heading{
+    grid-column:1 / -1;
+    font-family:var(--pixel);
+    font-size:9px;
+    color:#ffffff;
+    text-shadow:0 1px 3px rgba(0,0,0,0.6);
+    letter-spacing:1px;
+    margin:6px 0 -4px 2px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .sidebar-heading::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:rgba(255,255,255,0.5);
+  }
+
+  .icon-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 78px);
+    gap:16px 18px;
+    flex-shrink:0;
+  }
+  .icon-item{display:flex; flex-direction:column; align-items:center; gap:7px; cursor:pointer; user-select:none;}
+  .icon-box{width:54px;height:54px; font-size:22px; border-radius:15px;}
+  .icon-label{
+    font-family:var(--pixel); font-size:8px; color:#ffffff; text-align:center; line-height:1.4;
+    text-shadow:0 1px 3px rgba(0,0,0,0.65), 0 0 6px rgba(0,0,0,0.35);
+  }
+
+  /* ---------- HERO (now flex: text on left, photo in center) ---------- */
+  .hero{
+    flex:1; position:relative; display:flex; align-items:center; gap:30px;
+    padding:20px 10px 40px 10px; min-width:280px;
+  }
+  .hero-copy{flex:0 1 440px; min-width:0;}
+  .hero .eyebrow{font-family:var(--pixel); font-size:9px; color:var(--darkest); letter-spacing:1px; margin-bottom:14px; opacity:0.75;}
+  .hero h1{font-family:var(--script); font-size:clamp(30px, 6vw, 60px); line-height:1.05; color:var(--darkest); font-weight:400;}
+  .hero h1 .accent{color:var(--cream); text-shadow:2px 2px 0 var(--darkest), -1px -1px 0 var(--purple);}
+  .hero .subtitle{font-family:var(--serif); font-size:17px; margin-top:20px; color:var(--darkest); max-width:520px;}
+  .hero .hint{font-family:var(--pixel); font-size:9px; margin-top:26px; color:var(--darkest); opacity:0.7;}
+  .hero .hint::before{content:"▸ ";}
+
+  .sticky-note{
+    position:absolute; top:-6px; right:10px; width:225px;
+    background:#fbe98a; color:#3a2e00; padding:18px 16px 20px 16px;
+    font-family:var(--pixel); font-size:9px; line-height:1.7;
+    box-shadow:5px 6px 0 rgba(37,14,44,0.35); transform:rotate(3deg);
+    border:1px solid rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index:8;
+  }
+  .sticky-note .pin{
+    position:absolute; top:-8px;left:50%; transform:translateX(-50%);
+    width:12px;height:12px; background:var(--pink); border:2px solid var(--darkest); border-radius:50%;
+  }
+  .sticky-note .heading{font-size:8px; opacity:0.6; margin-bottom:8px;}
+  .sticky-note .sig{display:block; margin-top:10px; font-style:italic; font-family:var(--serif); font-size:12px;}
+
+  .robot{position:absolute; bottom:-6px; right:60px; display:flex; flex-direction:column; align-items:center; z-index:8;}
+  .robot .head{
+    width:70px;height:56px; background:#f6d9b8; border:2px solid var(--darkest); border-radius:14px 14px 8px 8px;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+  }
+  .robot .eye{width:9px;height:9px; background:var(--darkest); border-radius:50%;}
+  .robot .body{
+    width:78px;height:44px; background:var(--pink); border:2px solid var(--darkest); margin-top:-2px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:6px;
+  }
+  .robot .body span{background:rgba(37,14,44,0.5);}
+  .robot .tag{
+    position:absolute; top:8px; left:-38px; background:var(--cream); border:1px solid var(--darkest);
+    font-family:var(--pixel); font-size:8px; padding:3px 6px; box-shadow:2px 2px 0 var(--darkest);
+  }
+
+  
+    /* ---------- PHOTO FRAME → blooming flower (bigger, centered) ---------- */
+  .photo-frame {
+    position: absolute;
+    top: 80px;
+    left: 65%;
+    transform: translateX(-50%);
+    width: 350px;
+    height: 350px;
+    margin: 0;
+    z-index: 4;
+}
+  .flower-frame{
+    position:relative;
+    width:400px; height:400px;
+  }
+  .petal{
+    position:absolute; top:50%; left:50%;
+    width:78px; height:112px;
+    background:linear-gradient(160deg, #ffd3e2 0%, #f6a5c0 45%, #d9698f 100%);
+    border:2px solid #e9c46a;
+    border-radius:50% 50% 50% 50% / 65% 65% 35% 35%;
+    transform-origin:50% 100%;
+    transform:translate(-50%,-100%) rotate(var(--angle)) scale(0);
+    opacity:0;
+    box-shadow:0 3px 8px rgba(37,14,44,0.25);
+    animation:petalBloom 0.8s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay:var(--delay);
+  }
+  @keyframes petalBloom{
+    to{ transform:translate(-50%,-100%) rotate(var(--angle)) scale(1); opacity:1; }
+  }
+  .photo-circle{
+    position:absolute; top:50%; left:50%;
+    width:150px; height:150px;
+    transform:translate(-50%,-50%) scale(0);
+    border-radius:50%;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    border:3px solid #fdf2f0;
+    box-shadow:0 8px 22px rgba(37,14,44,0.35);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    z-index:5;
+    animation:photoPop 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay:0.65s;
+  }
+  @keyframes photoPop{ to{ transform:translate(-50%,-50%) scale(1); } }
+  .photo-circle img{ width:100%; height:100%; object-fit:cover; }
+  .photo-circle span{
+    font-family:var(--pixel); font-size:8px; color:#ffffff; text-align:center;
+    text-shadow:0 1px 3px rgba(0,0,0,0.5); line-height:1.8; padding:10px;
+  }
+
+
+  /* ---------- DOCK ---------- */
+  .dock-wrap{position:relative; z-index:5; display:flex; justify-content:center; padding:6px 20px 14px 20px; flex:0 0 auto;}
+  .dock{
+    display:flex; align-items:center; gap:14px;
+    background:rgba(253,242,240,0.4);
+    border:1px solid rgba(255,255,255,0.5);
+    padding:10px 20px; border-radius:40px;
+    box-shadow:0 6px 20px rgba(37,14,44,0.25);
+    flex-wrap:wrap; justify-content:center;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  .dock-item{display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer;}
+  .dock-icon{width:34px;height:34px; font-size:15px; border-radius:10px;}
+  .dock-label{
+    font-family:var(--pixel); font-size:7px; color:#ffffff;
+    text-shadow:0 1px 2px rgba(0,0,0,0.5);
+  }
+  .dock-divider{width:1.5px; height:28px; background:rgba(255,255,255,0.5); opacity:0.7;}
+
+  /* ---------- BASE OVERLAY ---------- */
+  .overlay{position:fixed; inset:0; background:rgba(10,4,12,0.55); display:none; align-items:center; justify-content:center; z-index:50; padding:20px;}
+  .overlay.active{display:flex;}
+
+  /* ---------- SHARED CONTENT STYLES ---------- */
+  .divider{height:1px; background:repeating-linear-gradient(90deg, var(--pink) 0 6px, transparent 6px 12px); margin:16px 0; opacity:0.6;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 18px 0;}
+  .tag{font-family:var(--pixel); font-size:8px; padding:6px 8px; border:1px solid var(--pink); color:var(--pink); background:rgba(246,165,192,0.08);}
+  .entry{margin-bottom:20px;}
+  .entry-title{font-family:var(--serif); font-weight:700; font-size:16px; color:var(--cream);}
+  .entry-meta{font-family:var(--pixel); font-size:8px; color:var(--mauve); margin:5px 0 8px 0; display:block;}
+  .entry ul{padding-left:18px;}
+  .entry li{font-family:var(--serif); font-size:14px; line-height:1.7; margin-bottom:6px; color:var(--card-text);}
+  .contact-row{display:flex; align-items:center; gap:10px; margin-bottom:12px; font-family:var(--serif); font-size:14.5px;}
+  .contact-row .ico{width:26px;height:26px; display:flex;align-items:center;justify-content:center; background:var(--pink); color:var(--darkest); font-size:12px; flex-shrink:0;}
+  .resume-btn{
+    display:inline-block; margin-top:10px; padding:10px 18px; background:var(--pink); color:var(--darkest);
+    font-family:var(--pixel); font-size:9px; text-decoration:none; border:2px solid var(--card-text);
+    box-shadow:3px 3px 0 rgba(246,165,192,0.4);
+  }
+  .proj-card{border:1px solid rgba(246,165,192,0.35); padding:14px 16px; margin-bottom:14px; cursor:pointer; transition:border-color 0.15s ease;}
+  .proj-card:hover{border-color:var(--pink);}
+  .proj-card h3{font-family:var(--serif); font-size:16px; color:var(--pink); margin-bottom:4px;}
+  .proj-card .stack{font-family:var(--pixel); font-size:7px; color:var(--mauve);}
+
+  .section-label{font-family:var(--pixel); font-size:9px; color:var(--pink); margin:18px 0 10px 0;}
+  .screenshot-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+  .screenshot-placeholder{
+    width:150px; height:96px; border:1.5px dashed rgba(246,165,192,0.6);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:var(--pixel); font-size:6.5px; color:var(--mauve); padding:8px; line-height:1.6;
+    overflow:hidden;
+  }
+  .screenshot-placeholder img{width:100%; height:100%; object-fit:cover;}
+  .repo-btn{
+    display:inline-flex; align-items:center; gap:6px; margin-top:4px; padding:10px 16px;
+    background:transparent; color:var(--pink); font-family:var(--pixel); font-size:9px;
+    text-decoration:none; border:1.5px solid var(--pink); transition:background 0.15s ease, color 0.15s ease;
+  }
+  .repo-btn:hover{background:var(--pink); color:var(--darkest);}
+
+  /* ---------- LETTER WINDOW ---------- */
+  .letter-window{width:100%; max-width:600px; perspective:1400px;}
+  .envelope{
+    position:relative; background:linear-gradient(180deg, var(--letter-bg), var(--letter-bg2));
+    border:2px solid var(--letter-border); box-shadow:8px 10px 0 rgba(37,14,44,0.35);
+    max-height:82vh; display:flex; flex-direction:column;
+  }
+  .envelope-flap{
+    position:absolute; top:-2px; left:-2px; right:-2px; height:120px;
+    background:linear-gradient(135deg,#ecd4ab, var(--letter-accent));
+    clip-path:polygon(0 0, 50% 74%, 100% 0);
+    transform-origin:top center; border-bottom:2px solid var(--letter-border); z-index:5;
+    animation:flapOpen 0.6s cubic-bezier(.5,0,.3,1) forwards;
+  }
+  @keyframes flapOpen{ from{transform:rotateX(0deg);} to{transform:rotateX(-165deg);} }
+  .envelope-controls{position:absolute; top:12px; right:14px; z-index:10;}
+  .envelope-controls .ctrl{
+    width:13px;height:13px; border-radius:50%; background:var(--letter-accent);
+    border:1px solid #7d3a4a; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.3);
+  }
+  .letter-content{
+    position:relative; z-index:1; padding:56px 32px 32px 32px;
+    opacity:0; transform:translateY(34px);
+    animation:letterRise 0.5s ease forwards; animation-delay:0.45s; overflow-y:auto;
+  }
+  @keyframes letterRise{to{opacity:1; transform:translateY(0);}}
+  .letter-content h2{font-family:var(--script); font-size:36px; color:var(--letter-accent); margin-bottom:14px; font-weight:400;}
+  .letter-content p{font-family:var(--serif); font-size:14.5px; line-height:1.8; color:var(--letter-ink); margin-bottom:12px;}
+  .letter-content .divider{background:repeating-linear-gradient(90deg, var(--letter-accent) 0 6px, transparent 6px 12px);}
+  .letter-content .tag{border:1px solid var(--letter-accent); color:var(--letter-accent); background:rgba(181,101,122,0.08);}
+  .letter-content .entry-title{color:var(--letter-ink);}
+  .letter-content .entry-meta{color:var(--letter-meta);}
+  .letter-content .entry li{color:var(--letter-ink);}
+  .letter-content .skill-cat h4{font-family:var(--pixel); font-size:9px; color:var(--letter-accent); margin-bottom:8px;}
+  .letter-content .skill-cat{margin-bottom:16px;}
+  .letter-content .proj-card{border:1px solid rgba(181,101,122,0.4); background:rgba(255,255,255,0.25);}
+  .letter-content .proj-card:hover{border-color:var(--letter-accent);}
+  .letter-content .proj-card h3{color:var(--letter-ink); font-weight:700;}
+  .letter-content .proj-card .stack{color:var(--letter-meta);}
+
+  /* ---------- BOOK WINDOW ---------- */
+  .book-window{width:100%; max-width:640px; perspective:1600px;}
+  .book{
+    position:relative; max-height:82vh; background:var(--card-bg); color:var(--card-text);
+    border:2px solid var(--pink); box-shadow:8px 8px 0 rgba(0,0,0,0.4), 0 0 0 4px rgba(246,165,192,0.15);
+    display:flex; flex-direction:column;
+  }
+  .book-cover{
+    position:absolute; inset:0; z-index:6;
+    background:linear-gradient(135deg, var(--darkest), #3a1a42);
+    border-right:2px solid var(--pink);
+    transform-origin:left center;
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+    display:flex; align-items:center; justify-content:center;
+    animation:coverOpen 0.75s cubic-bezier(.55,0,.3,1) forwards;
+    box-shadow:6px 0 18px rgba(0,0,0,0.4);
+  }
+  @keyframes coverOpen{
+    from{transform:rotateY(0deg);}
+    to{transform:rotateY(-118deg);}
+  }
+  .cover-inner{text-align:center; padding:20px;}
+  .cover-icon{font-size:42px; margin-bottom:12px;}
+  .cover-title{font-family:var(--script); font-size:34px; color:var(--pink); line-height:1.1;}
+  .cover-sub{font-family:var(--pixel); font-size:8px; color:var(--mauve); opacity:0.8; margin-top:10px;}
+  .book-controls{position:absolute; top:12px; right:14px; z-index:10;}
+  .book-controls .ctrl{
+    width:13px;height:13px; border-radius:50%; background:var(--pink);
+    border:1px solid #7d3a4a; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+  .book-content{
+    position:relative; z-index:1; padding:56px 28px 30px 28px;
+    opacity:0; animation:pageReveal 0.5s ease forwards; animation-delay:0.6s;
+    overflow-y:auto;
+  }
+  @keyframes pageReveal{to{opacity:1;}}
+  .book-content h2{font-family:var(--script); font-size:36px; color:var(--pink); margin-bottom:14px; font-weight:400;}
+  .book-content p{font-family:var(--serif); font-size:14.5px; line-height:1.75; color:var(--card-text); margin-bottom:12px;}
+  .book-content a{color:var(--pink);}
+
+  footer.credit{text-align:center; font-family:var(--pixel); font-size:7px; color:var(--darkest); opacity:0.55; padding:2px 0 6px 0; position:relative; z-index:3; flex:0 0 auto;}
+
+  /* ============ DESKTOP: LOCK TO ONE SCREEN, NO SCROLL ============ */
+  @media (min-width:701px){
+    html,body{height:100dvh; overflow:hidden;}
+    body{display:flex; flex-direction:column;}
+    .desktop{flex:1 1 auto; min-height:0; overflow:hidden;}
+    .icon-grid{
+      grid-template-columns:repeat(2, minmax(56px, 74px));
+      gap:clamp(6px, 1.3vh, 14px) 14px;
+    }
+    .icon-box{
+      width:clamp(38px, 5.6vh, 48px);
+      height:clamp(38px, 5.6vh, 48px);
+      font-size:clamp(15px, 2.2vh, 19px);
+    }
+    .icon-label{font-size:clamp(6.5px, 1vh, 7.5px);}
+    .hero h1{font-size:clamp(28px, 4vw, 52px);}
+    .welcome-text{font-size:clamp(28px, 4vw, 52px);}
+    .hero .subtitle{margin-top:clamp(6px,1.4vh,14px); font-size:clamp(12px,1.6vh,16px);}
+    .hero .hint{margin-top:clamp(8px,1.6vh,16px);}
+      .flower-frame {
+    width: 400px;
+    height: 400px;
+}
+
+.photo-circle {
+    width: 220px;
+    height: 220px;
+}
+
+.petal {
+    width: 100px;
+    height: 150px;
+}
+    .sticky-note{ width:clamp(160px, 18vh, 225px); padding:clamp(10px,1.6vh,18px) clamp(10px,1.4vh,16px); }
+    .robot{ transform:scale(clamp(0.7, 1vh, 1)); transform-origin:bottom right; }
+  }
+
+  /* ---------- MOBILE: natural scroll + stacked layout ---------- */
+  @media (max-width:760px){
+    .desktop{flex-direction:column; padding:20px 16px; gap:20px;}
+    .icon-grid{grid-template-columns:repeat(4, 1fr); width:100%; gap:16px 10px;}
+    .icon-box{width:46px;height:46px;font-size:18px;}
+    .hero{flex-direction:column; align-items:stretch; gap:20px; padding:10px 0 30px 0;}
+    .hero-copy{flex:none;}
+    .photo-frame{ margin:10px auto 0 auto; }
+    .sticky-note{position:static; margin:0 auto; transform:rotate(-2deg); width:200px;}
+    .robot{position:static; margin:10px auto 0 auto; transform:scale(1);}
+    .robot .tag{display:none;}
+    .hero h1{font-size:clamp(38px,12vw,60px);}
+    .dock{gap:8px; padding:10px 14px;}
+    .dock-label{display:none;}
+    .envelope, .book{max-height:88vh;}
+    .topbar{font-size:8px; padding:10px 14px;}
+    .topbar .status span:not(.dot){display:none;}
+    .welcome-text{font-size:clamp(34px,10vw,52px);}
+    .flower-frame{ width:200px; height:200px; }
+    .photo-circle{ width:120px; height:120px; }
+    .petal{ width:52px; height:82px; }
+    .book-content, .letter-content{padding-left:20px; padding-right:20px;}
+    .screenshot-placeholder{width:120px; height:80px;}
+  }
+
+  @media (max-width:420px){
+    .icon-grid{grid-template-columns:repeat(3, 1fr);}
+    .welcome-text{font-size:30px;}
+    .hero h1{font-size:34px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand"><span class="logo"></span><span>Shambhavi Mishra</span></div>
+    <div class="status">
+      <span><span class="dot"></span>Available for good problems</span>
+      <span id="clock">--:--</span>
+    </div>
+  </div>
+
+  <div class="welcome-wrap">
+    <span class="welcome-text" id="welcomeText"></span>
+  </div>
+
+  <div class="desktop">
+    <div class="icon-grid">
+      <div class="icon-item" onclick="openWindow('about')"><div class="glass-tile icon-box">👤</div><div class="icon-label">About</div></div>
+      <div class="icon-item" onclick="openWindow('projects')"><div class="glass-tile icon-box">﹥_</div><div class="icon-label">Projects</div></div>
+      <div class="icon-item" onclick="openWindow('skills')"><div class="glass-tile icon-box">⚡</div><div class="icon-label">Skills</div></div>
+      <div class="icon-item" onclick="openWindow('experience')"><div class="glass-tile icon-box">💼</div><div class="icon-label">Experience</div></div>
+      <div class="icon-item" onclick="openWindow('education')"><div class="glass-tile icon-box">🎓</div><div class="icon-label">Education</div></div>
+      <div class="icon-item" onclick="openWindow('achievements')"><div class="glass-tile icon-box">🏆</div><div class="icon-label">Achievements</div></div>
+
+      <div class="sidebar-heading">🗂 Projects</div>
+      <div class="icon-item" onclick="openWindow('tracex')"><div class="glass-tile icon-box">🛡</div><div class="icon-label">TraceX</div></div>
+      <div class="icon-item" onclick="openWindow('resumealign')"><div class="glass-tile icon-box">📄</div><div class="icon-label">ResumeAlign AI</div></div>
+      <div class="icon-item" onclick="openWindow('shikshasetu')"><div class="glass-tile icon-box">📚</div><div class="icon-label">Shiksha Setu</div></div>
+      <div class="icon-item" onclick="openWindow('finsight')"><div class="glass-tile icon-box">📈</div><div class="icon-label">Finsight</div></div>
+      <div class="icon-item" onclick="openWindow('student')"><div class="glass-tile icon-box">🎓</div><div class="icon-label">Student Predictor</div></div>
+      <div class="icon-item" onclick="openWindow('linksy')"><div class="glass-tile icon-box">🔗</div><div class="icon-label">LinkSy</div></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Personal computer / portfolio</div>
+        <h1>A little corner<br>of the internet, <span class="accent">built by me.</span>.</h1>
+         <p class="subtitle">
+    • Software Engineering<br>
+    • AI/ML<br>
+    • Full-stack systems
+</p>
+        <p class="hint">click an icon to explore</p>
+      </div>
+
+      <div class="photo-frame">
+        <div class="flower-frame">
+          <div class="petal" style="--angle:0deg;   --delay:0.05s;"></div>
+          <div class="petal" style="--angle:60deg;  --delay:0.15s;"></div>
+          <div class="petal" style="--angle:120deg; --delay:0.25s;"></div>
+          <div class="petal" style="--angle:180deg; --delay:0.35s;"></div>
+          <div class="petal" style="--angle:240deg; --delay:0.45s;"></div>
+          <div class="petal" style="--angle:300deg; --delay:0.55s;"></div>
+          <div class="photo-circle">
+    <img src="images/profile.jpeg" alt="Shambhavi Mishra">
+</div>
+        </div>
+      </div>
+
+      <div class="sticky-note">
+        <div class="pin"></div>
+        <div class="heading">Note to self</div>
+        Building AI-powered and full-stack systems.
+        <span class="sig">— Shambhavi</span>
+      </div>
+
+      <div class="robot">
+        <div class="tag">ip</div>
+        <div class="head"><div class="eye"></div><div class="eye"></div></div>
+        <div class="body"><span></span><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dock-wrap">
+    <div class="dock">
+      <div class="dock-item" onclick="openWindow('about')"><div class="glass-tile dock-icon">👤</div><div class="dock-label">About</div></div>
+      <div class="dock-item" onclick="openWindow('projects')"><div class="glass-tile dock-icon">﹥_</div><div class="dock-label">Projects</div></div>
+      <div class="dock-item" onclick="openWindow('skills')"><div class="glass-tile dock-icon">⚡</div><div class="dock-label">Skills</div></div>
+      <div class="dock-item" onclick="openWindow('experience')"><div class="glass-tile dock-icon">💼</div><div class="dock-label">Experience</div></div>
+      <div class="dock-item" onclick="openWindow('education')"><div class="glass-tile dock-icon">🎓</div><div class="dock-label">Education</div></div>
+      <div class="dock-item" onclick="openWindow('achievements')"><div class="glass-tile dock-icon">🏆</div><div class="dock-label">Achievements</div></div>
+      <div class="dock-item" onclick="openWindow('resume')"><div class="glass-tile dock-icon">📃</div><div class="dock-label">Resume</div></div>
+      <div class="dock-item" onclick="openWindow('contact')"><div class="glass-tile dock-icon">✉</div><div class="dock-label">Contact</div></div>
+      <div class="dock-divider"></div>
+      <div class="dock-item" onclick="window.open('https://github.com/ShambhaviMishra07','_blank')"><div class="glass-tile dock-icon">GH</div><div class="dock-label">GitHub</div></div>
+      <div class="dock-item" onclick="window.open('https://www.linkedin.com/in/shambhavimis02shra','_blank')"><div class="glass-tile dock-icon">in</div><div class="dock-label">LinkedIn</div></div>
+      <div class="dock-item" onclick="window.open('https://leetcode.com/u/Shambhavi_Mishra01/','_blank')"><div class="glass-tile dock-icon">&lt;/&gt;</div><div class="dock-label">LeetCode</div></div>
+    </div>
+  </div>
+
+  <footer class="credit">Shambhavi Mishra — BPIT · CSE · Class of 2027</footer>
+
+  <!-- ================= LETTER-STYLE WINDOWS ================= -->
+
+  <div class="overlay" id="win-about">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('about')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>About</h2>
+          <p>Hi, I'm Shambhavi Mishra — a Computer Science undergraduate at Bhagwan Parshuram Institute of Technology, Delhi (Class of 2027), building AI-powered and full-stack systems.</p>
+          <p>My work spans agentic AI pipelines, real-time backend systems, and full-stack product engineering — from a fraud-risk detection engine built with XGBoost and LangGraph, to real-time SOS/location services running on Socket.io and Redis Pub/Sub.</p>
+          <div class="divider"></div>
+          <p>I've solved 500+ DSA problems on LeetCode, competed in Smart India Hackathon 2025, and reached the finals of SholkaDecode (NSUT) and BuildWars (MAIT).</p>
+          <div class="tag-row">
+            <span class="tag">JAVASCRIPT</span><span class="tag">PYTHON</span><span class="tag">REACT</span>
+            <span class="tag">NODE.JS</span><span class="tag">LANGGRAPH</span><span class="tag">SYSTEM DESIGN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-skills">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('skills')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>Skills</h2>
+          <div class="skill-cat">
+            <h4>Languages</h4>
+            <div class="tag-row">
+              <span class="tag">JAVASCRIPT</span><span class="tag">TYPESCRIPT</span><span class="tag">PYTHON</span>
+              <span class="tag">JAVA</span><span class="tag">C++</span><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">SQL</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4>Frameworks &amp; Libraries</h4>
+            <div class="tag-row">
+              <span class="tag">REACT.JS</span><span class="tag">REACT NATIVE</span><span class="tag">TAILWIND CSS</span>
+              <span class="tag">SOCKET.IO</span><span class="tag">MONGOOSE</span><span class="tag">REDIS</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4>AI / ML &amp; LLM</h4>
+            <div class="tag-row">
+              <span class="tag">GENERATIVE AI</span><span class="tag">RAG</span><span class="tag">PROMPT ENGINEERING</span>
+              <span class="tag">LANGGRAPH</span><span class="tag">LANGCHAIN</span><span class="tag">OPENAI API</span>
+              <span class="tag">GROQ API</span><span class="tag">CLAUDE API</span><span class="tag">CHROMADB</span>
+              <span class="tag">XGBOOST</span><span class="tag">SHAP</span><span class="tag">SCIKIT-LEARN</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4>Backend &amp; Databases</h4>
+            <div class="tag-row">
+              <span class="tag">NODE.JS</span><span class="tag">EXPRESS.JS</span><span class="tag">REST APIS</span>
+              <span class="tag">FASTAPI</span><span class="tag">JWT</span><span class="tag">MONGODB</span>
+              <span class="tag">MYSQL</span><span class="tag">SQLITE</span><span class="tag">POSTGRESQL</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4>Developer Tools</h4>
+            <div class="tag-row">
+              <span class="tag">GIT</span><span class="tag">GITHUB</span><span class="tag">JENKINS</span>
+              <span class="tag">SELENIUM</span><span class="tag">CI/CD</span><span class="tag">POSTMAN</span>
+              <span class="tag">AWS</span><span class="tag">DOCKER</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4>Core Competencies</h4>
+            <div class="tag-row">
+              <span class="tag">DSA (500+)</span><span class="tag">OOP</span><span class="tag">OPERATING SYSTEMS</span>
+              <span class="tag">DBMS</span><span class="tag">NETWORKS</span><span class="tag">SYSTEM DESIGN</span>
+              <span class="tag">SDLC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-projects">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('projects')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>Projects</h2>
+          <div class="proj-card" onclick="switchWindow('projects','tracex')">
+            <h3>TraceX — Agentic Merchant Risk Detection</h3>
+            <div class="stack">PYTHON · REACT · FASTAPI · XGBOOST · LANGGRAPH</div>
+          </div>
+          <div class="proj-card" onclick="switchWindow('projects','resumealign')">
+            <h3>ResumeAlign AI — Agentic Resume Analyzer</h3>
+            <div class="stack">REACT · NODE.JS · MONGODB · GROQ API · LLAMA 3.X</div>
+          </div>
+          <div class="proj-card" onclick="switchWindow('projects','shikshasetu')">
+            <h3>Shiksha Setu — Offline-First Learning Platform</h3>
+            <div class="stack">REACT NATIVE · TYPESCRIPT · POSTGRESQL · PRISMA</div>
+          </div>
+          <div class="proj-card" onclick="switchWindow('projects','finsight')">
+            <h3>Finsight — Personal Finance Dashboard</h3>
+            <div class="stack">REACT · RECHARTS · ZUSTAND · JWT</div>
+          </div>
+          <div class="proj-card" onclick="switchWindow('projects','student')">
+            <h3>Student Performance Predictor</h3>
+            <div class="stack">PYTHON · SCIKIT-LEARN · FLASK · RANDOM FOREST</div>
+          </div>
+          <div class="proj-card" onclick="switchWindow('projects','linksy')">
+            <h3>LinkSy</h3>
+            <div class="stack">REACT · NODE.JS · SOCKET.IO · MONGODB · REDIS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-experience">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('experience')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>Experience</h2>
+          <div class="entry">
+            <div class="entry-title">Web Development Trainee — Centre for Railway Information Systems</div>
+            <span class="entry-meta">15 JUN 2026 – 31 JUL 2026 · DELHI</span>
+            <ul>
+              <li>Developed a real-time web application using JavaScript, Socket.io and Redis Pub/Sub, supporting horizontally scalable messaging with sub-50ms delivery.</li>
+              <li>Implemented backend services, REST APIs and Redis caching, reducing MongoDB reads by ~80% through optimized data access and 24-hour TTL caching.</li>
+              <li>Developed and debugged real-time SOS/location services using GPS, camera recording and Leaflet.js; secured APIs using JWT, bcrypt and role-based middleware.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-education">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('education')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>Education</h2>
+          <div class="entry">
+            <div class="entry-title">B.Tech. in Computer Science &amp; Engineering</div>
+            <span class="entry-meta">BHAGWAN PARSHURAM INSTITUTE OF TECHNOLOGY, ROHINI, DELHI · 2023–2027</span>
+            <p>CGPA — 8.41</p>
+          </div>
+          <div class="divider"></div>
+          <div class="entry">
+            <div class="entry-title">Samsung Innovation Campus — Artificial Intelligence</div>
+            <span class="entry-meta">SAMSUNG · 12/2025 – 03/2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-achievements">
+    <div class="letter-window">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-controls"><span class="ctrl" onclick="closeWindow('achievements')" title="Close"></span></div>
+        <div class="letter-content">
+          <h2>Achievements</h2>
+          <ul>
+            <li>Solved 500+ DSA problems in Java on LeetCode.</li>
+            <li>Participated in Smart India Hackathon (SIH) 2025.</li>
+            <li>Finalist in SholkaDecode (NSUT).</li>
+            <li>Finalist in BuildWars (MAIT).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BOOK-STYLE PROJECT WINDOWS ================= -->
+
+  <div class="overlay" id="win-tracex">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">🛡</div>
+            <div class="cover-title">TraceX</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('tracex')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>TraceX</h2>
+          <p>Agentic merchant risk detection system.</p>
+          <div class="tag-row">
+            <span class="tag">PYTHON</span><span class="tag">REACT</span><span class="tag">FASTAPI</span><span class="tag">XGBOOST</span>
+            <span class="tag">LANGGRAPH</span><span class="tag">GROQ API</span><span class="tag">CHROMADB</span><span class="tag">SHAP</span>
+          </div>
+          <ul>
+            <li>Built a fraud-spike detection pipeline using Isolation Forest + XGBoost, achieving 0.985 PR-AUC on unseen merchants vs. 0.785 Robust Z-Score and 0.765 Isolation Forest baselines.</li>
+            <li>Optimized the detection threshold using false-positive/false-negative costs, achieving 99.6% recall, 66.5% precision, and only 1 false negative across 235 positive cases.</li>
+            <li>Built a LangGraph multi-agent workflow with Policy-RAG, Evidence, and Decision agents for contextual risk investigation, with tool-based reasoning and automated workflow validation.</li>
+          </ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">
+              <img src="images/dashboard.png" alt="TraceX dashboard">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/case_detail.png" alt="TraceX case detail">
+            </div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/TraceX" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-resumealign">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">📄</div>
+            <div class="cover-title">ResumeAlign AI</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('resumealign')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>ResumeAlign AI</h2>
+          <p>Agentic AI resume analyzer.</p>
+          <div class="tag-row">
+            <span class="tag">REACT</span><span class="tag">NODE.JS</span><span class="tag">EXPRESS</span>
+            <span class="tag">MONGODB</span><span class="tag">GROQ API</span><span class="tag">LLAMA 3.X</span><span class="tag">TAILWIND</span>
+          </div>
+          <ul>
+            <li>Built ATS scoring across 5 weighted components, analyzing 40 technical keywords, 26 action verbs, and 8 resume sections.</li>
+            <li>Achieved ~31ms median latency across 5 test runs with automated resume validation and Selenium-based UI testing.</li>
+            <li>Built an agentic workflow using Groq LLaMA 3, tool calling and SSE streaming for context-aware iterative analysis, self-correction and response generation.</li>
+          </ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">
+              <img src="images/landing_page.png" alt="ResumeAlign landing page">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/analyze.png" alt="ResumeAlign analyze page">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/resume_builder.png" alt="ResumeAlign resume builder">
+            </div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/resumeAlign-AI" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-shikshasetu">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">📚</div>
+            <div class="cover-title">Shiksha Setu</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('shikshasetu')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>Shiksha Setu</h2>
+          <p>Offline-first digital learning platform.</p>
+          <div class="tag-row">
+            <span class="tag">REACT NATIVE</span><span class="tag">TYPESCRIPT</span><span class="tag">NODE.JS</span>
+            <span class="tag">POSTGRESQL</span><span class="tag">SQLITE</span><span class="tag">PRISMA</span><span class="tag">JWT</span>
+          </div>
+          <ul>
+            <li>Built a full-stack application with REST APIs, PostgreSQL and SQLite for offline course, quiz and progress management; designed and executed test cases for API endpoints and data synchronization.</li>
+            <li>Implemented data processing and synchronization using queued progress and quiz events, validating offline/online workflows and edge cases through automated testing.</li>
+            <li>Developed role-based access control for students, teachers and admins, with database-backed course authoring and progress tracking.</li>
+          </ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">add screenshot 1<br>(shikshasetu-1.png)</div>
+            <div class="screenshot-placeholder">add screenshot 2<br>(shikshasetu-2.png)</div>
+            <div class="screenshot-placeholder">add screenshot 3<br>(shikshasetu-3.png)</div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/Shiksha-Setu" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-finsight">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">📈</div>
+            <div class="cover-title">Finsight</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('finsight')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>Finsight</h2>
+          <p>Personal finance dashboard.</p>
+          <div class="tag-row">
+            <span class="tag">REACT</span><span class="tag">NODE.JS</span><span class="tag">EXPRESS</span>
+            <span class="tag">MONGODB</span><span class="tag">RECHARTS</span><span class="tag">ZUSTAND</span><span class="tag">JWT</span>
+          </div>
+          <ul>
+            <li>Built a responsive React frontend using reusable components and client-server architecture, a consistent design system, interactive Recharts visualizations, and JWT authentication.</li>
+            <li>Implemented Zustand-based state management for financial data, budget tracking, category alerts, and dynamic dashboard updates.</li>
+            <li>Developed responsive layouts, animations, dark/light mode, and interactive financial insights for a consistent user experience across screen sizes.</li>
+          </ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">
+              <img src="images/home_page.png" alt="FinSight home page">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/Budget.png" alt="FinSight budget page">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/analytics.png" alt="FinSight analytics">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/Dashboard (1).png" alt="FinSight dashboard">
+            </div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/finsight" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-student">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">🎓</div>
+            <div class="cover-title">Student Predictor</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('student')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>Student Performance Predictor</h2>
+          <div class="tag-row">
+            <span class="tag">PYTHON</span><span class="tag">SCIKIT-LEARN</span><span class="tag">FLASK</span><span class="tag">PANDAS</span><span class="tag">RANDOM FOREST</span>
+          </div>
+          <ul>
+            <li>Architected an end-to-end ML pipeline using Random Forest Regressor achieving 92%+ R² accuracy to predict student final scores from five academic features across 400 student records.</li>
+            <li>Built a Flask web interface enabling real-time student performance prediction.</li>
+          </ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">
+              <img src="images/home-ui.png" alt="Student project home UI">
+            </div>
+            <div class="screenshot-placeholder">
+              <img src="images/expected-outcome.png" alt="Student project expected outcome">
+            </div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/StudentScorePredictor/tree/main" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LinkSy — placeholder, fill in later -->
+  <div class="overlay" id="win-linksy">
+    <div class="book-window">
+      <div class="book">
+        <div class="book-cover">
+          <div class="cover-inner">
+            <div class="cover-icon">🔗</div>
+            <div class="cover-title">LinkSy</div>
+            <div class="cover-sub">opening…</div>
+          </div>
+        </div>
+        <div class="book-controls"><span class="ctrl" onclick="closeWindow('linksy')" title="Close"></span></div>
+        <div class="book-content">
+          <h2>LinkSy</h2>
+          <p><!-- TODO: replace with a real description -->A real time communication system.</p>
+          <div class="tag-row">
+           <span class="tag">REACT</span>
+<span class="tag">NODE.JS</span>
+<span class="tag">SOCKET.IO</span>
+<span class="tag">MONGODB</span>
+<span class="tag">REDIS</span>
+          </div>
+          <ul>
+    <li>Developed a real-time web application using JavaScript, Socket.io and Redis Pub/Sub, supporting horizontally scalable messaging with sub-50ms delivery.</li>
+
+    <li>Implemented backend services, REST APIs and Redis caching, reducing MongoDB reads by ~80% through optimized data access and 24-hour TTL caching.</li>
+
+    <li>Developed and debugged real-time SOS/location services using GPS, camera recording and Leaflet.js; secured APIs using JWT, bcrypt and role-based middleware.</li>
+</ul>
+          <div class="section-label">Screenshots</div>
+          <div class="screenshot-row">
+            <div class="screenshot-placeholder">add screenshot 1<br>(linksy-1.png)</div>
+            <div class="screenshot-placeholder">add screenshot 2<br>(linksy-2.png)</div>
+            <div class="screenshot-placeholder">add screenshot 3<br>(linksy-3.png)</div>
+          </div>
+          <a class="repo-btn" href="https://github.com/ShambhaviMishra07/LinKsy" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-resume">
+    <div class="window" style="width:100%;max-width:500px;background:var(--card-bg);color:var(--card-text);border:2px solid var(--pink);box-shadow:8px 8px 0 rgba(0,0,0,0.4);">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(90deg, var(--darkest), #3a1a42);border-bottom:2px solid var(--pink);">
+        <div style="font-family:var(--pixel);font-size:10px;color:var(--pink);">📃 Resume.pdf</div>
+        <span class="ctrl" style="width:11px;height:11px;background:#e05c6b;cursor:pointer;display:inline-block;" onclick="closeWindow('resume')"></span>
+      </div>
+      <div style="padding:26px 28px 30px 28px;">
+        <h2 style="font-family:var(--script);font-size:36px;color:var(--pink);margin-bottom:14px;">Resume</h2>
+        <p style="font-family:var(--serif);font-size:14.5px;line-height:1.75;margin-bottom:12px;">Download a copy of my full resume below.</p>
+        <a class="resume-btn" href="Shambhavi_Mishra_Resume.pdf" download>⬇ Download Resume</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="win-contact">
+    <div class="window" style="width:100%;max-width:500px;background:var(--card-bg);color:var(--card-text);border:2px solid var(--pink);box-shadow:8px 8px 0 rgba(0,0,0,0.4);">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(90deg, var(--darkest), #3a1a42);border-bottom:2px solid var(--pink);">
+        <div style="font-family:var(--pixel);font-size:10px;color:var(--pink);">✉ Contact.msg</div>
+        <span class="ctrl" style="width:11px;height:11px;background:#e05c6b;cursor:pointer;display:inline-block;" onclick="closeWindow('contact')"></span>
+      </div>
+      <div style="padding:26px 28px 30px 28px;">
+        <h2 style="font-family:var(--script);font-size:36px;color:var(--pink);margin-bottom:14px;">Contact</h2>
+        <div class="contact-row"><span class="ico">✉</span> <a href="mailto:shambhavim171@gmail.com">shambhavim171@gmail.com</a></div>
+        <div class="contact-row"><span class="ico">☎</span> <a href="tel:+918810252897">+91 88102 52897</a></div>
+        <div class="contact-row"><span class="ico">GH</span> <a href="https://github.com/ShambhaviMishra07" target="_blank">GitHub</a></div>
+        <div class="contact-row"><span class="ico">in</span> <a href="https://www.linkedin.com/in/shambhavimis02shra" target="_blank">LinkedIn</a></div>
+        <div class="contact-row"><span class="ico">&lt;/&gt;</span> <a href="https://leetcode.com/u/Shambhavi_Mishra01/" target="_blank">LeetCode</a></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function openWindow(id){
+    var ov = document.getElementById('win-' + id);
+    ov.classList.add('active');
+    ov.querySelectorAll('.envelope-flap, .letter-content, .book-cover, .book-content').forEach(function(el){
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+  function closeWindow(id){
+    document.getElementById('win-' + id).classList.remove('active');
+  }
+  function switchWindow(fromId, toId){
+    closeWindow(fromId);
+    openWindow(toId);
+  }
+  document.querySelectorAll('.overlay').forEach(function(ov){
+    ov.addEventListener('click', function(e){
+      if(e.target === ov){ ov.classList.remove('active'); }
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.overlay.active').forEach(function(ov){ ov.classList.remove('active'); });
+    }
+  });
+  function updateClock(){
+    var d = new Date();
+    var h = d.getHours(), m = d.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if(h === 0) h = 12;
+    document.getElementById('clock').textContent =
+      (h < 10 ? '0'+h : h) + ':' + (m < 10 ? '0'+m : m) + ' ' + ampm;
+  }
+  updateClock();
+  setInterval(updateClock, 1000 * 15);
+
+  // Welcome typewriter effect
+  (function(){
+    var text = "Welcome";
+    var el = document.getElementById('welcomeText');
+    var i = 0;
+    function type(){
+      if(i <= text.length){
+        el.innerHTML = text.slice(0, i) + '<span class="cursor">|</span>';
+        i++;
+        setTimeout(type, 130);
+      } else {
+        setTimeout(function(){
+          el.innerHTML = text;
+        }, 900);
+      }
+    }
+    type();
+  })();
+</script>
+</body>
+</html>
